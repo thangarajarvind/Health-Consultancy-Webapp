@@ -1,20 +1,28 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="../style.css" />
-    </head>
-    <body>
-        <div>
-            <form name="login" action="../php/login.php" method="POST">
-                <h1>Sign in</h1>
-                <input type="text" name="user" placeholder="Email ID" required="" />
-                <input type="password" name="pass" placeholder="Password" required="" />
-                <label for="status">User type:</label>
-                <select name="status" id="status">
-                    <option value="doc">Doctor</option>
-                    <option value="pat">Patient</option>
-                </select>
-                <button>Sign In</button>
-            </form>
-        </div>
-    </body>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>login form</title>
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="../css/style.css">
+
+</head>
+<body>
+<h1> Health Consultancy</h1>
+<div class="form-container">
+
+    <form name="login" action="../php/login.php" method="POST">
+      <h3>User login now</h3>
+      <input type="email" name="email" required placeholder="Email">
+      <input type="password" name="password" required placeholder="Password">
+      <input type="submit" name="submit" value="login now" class="form-btn">
+      <p>Don't have an account? <a href="register_form.html">Register now</a></p>
+      <p>Forgot password? <a href="forgot_pass.html">Reset password now</a></p>
+   </form>
+
+</div>
+
+</body>
 </html>

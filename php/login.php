@@ -1,67 +1,41 @@
 <?php
-    session_start();
+session_start();
 
-    $user = $_POST['user'];
-    $pass  = $_POST['pass'];
-    $status = $_POST['status'];
+$host = "localhost";
+$dbusername = "root";
+$dbpassword = "";
+$dbname = "healthConsultancy";
 
-    if (empty($user) || empty($pass) )
-    {
-        die('Username or password missing');
-    }
+$conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
 
-    $host = "localhost";
-    $dbusername = "root";
-    $dbpassword = "";
-    $dbname = "healthConsultancy";
+if(isset($_POST['submit'])){
+  $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $pass = md5($_POST['password']);
 
-    // Create connection
-    $conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
+   $select = " SELECT * FROM users WHERE Email = '$email' && Password = '$pass' ";
 
-    if (mysqli_connect_error()){
-    die('Connect Error ('. mysqli_connect_errno() .') '
-        . mysqli_connect_error());
-    }
+   $result = mysqli_query($conn, $select);
 
-    else{
-        $SELECT = "SELECT email From users Where Email = ? Limit 1";
+   if(mysqli_num_rows($result) > 0){
 
-        $stmt = $conn->prepare($SELECT);
-        $stmt->bind_param("s", $user);
-        $stmt->execute();
-        $stmt->bind_result($user);
-        $stmt->store_result();
-        $rnum = $stmt->num_rows;
-        $stmt->close();
+      $row = mysqli_fetch_array($result);
 
-        if ($rnum==1) {
-            $result = mysqli_query($conn,"SELECT * FROM users where Email='" . $_POST['user'] . "'");
-            $row = mysqli_fetch_assoc($result);
-            $dbpass = $row['Password'];
-            //$pass = md5($pass);
-            $uid = $row['UID'];
-            $dbstatus = $row['Status'];
-            if($status == $dbstatus){
-                if($pass == $dbpass){
-                    $_SESSION['uid'] = $uid;
-                    $_SESSION['email'] = $user;
-                    if($status == 'doc'){
-                        header('Location: ../html/doc.html');
-                    }
-                    else{
-                        header('Location: ../html/pat.html');
-                    }
-                }
-                else{
-                    echo '<script>alert("Wrong password")</script>'; 
-                }
-            }
-            else{
-                    echo '<script>alert("User does not exist")</script>'; 
-            }
-        }
-        if($rnum!=1){
-            echo '<script>alert("User does not exist")</script>'; 
-        }
-    }
+      if($row['Status'] == 'doctor'){
+
+         $_SESSION['user_name'] = $row['UID'];
+         header('location:../html/doctor_page.html');
+
+      }
+      elseif($row['Status'] == 'patient'){
+
+         $_SESSION['user_name'] = $row['UID'];
+         header('location:../html/html/patient_page.html');
+
+      }
+     
+   }else{
+      //$error[] = 'incorrect email or password!';
+      echo '<span class="error-msg">incorrect email or password!</span>';
+   }
+}
 ?>
