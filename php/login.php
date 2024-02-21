@@ -29,13 +29,14 @@ if(isset($_POST['submit'])){
       elseif($row['Status'] == 'patient'){
 
          $_SESSION['user_name'] = $row['UID'];
-         header('location:../html/html/patient_page.html');
+         header('location:../html/patient_page.html');
 
       }
      
    }else{
-      //$error[] = 'incorrect email or password!';
-      echo '<span class="error-msg">incorrect email or password!</span>';
+      echo "<script>alert('incorrect email or password!')
+      window.location.href='../html/login.html';
+      </script>";
    }
 }
 ?>
