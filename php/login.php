@@ -11,6 +11,7 @@ $conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
 if(isset($_POST['submit'])){
   $email = mysqli_real_escape_string($conn, $_POST['email']);
   $pass = md5($_POST['password']);
+  $status = $_POST['status'];
 
    $select = " SELECT * FROM users WHERE Email = '$email' && Password = '$pass' ";
 
@@ -21,20 +22,29 @@ if(isset($_POST['submit'])){
       $row = mysqli_fetch_array($result);
 
       if($row['Status'] == 'doctor'){
-
-         $_SESSION['user_name'] = $row['UID'];
-         header('location:../html/doctor_page.html');
-
+         if($status == 'doctor'){
+            $_SESSION['user_name'] = $row['UID'];
+            header('location:../html/doctor_page.html');
+         }
+         else{
+            echo "<script>alert('User does not exist')
+            window.location.href='../html/login.html';
+            </script>";
+         }
       }
       elseif($row['Status'] == 'patient'){
-
-         $_SESSION['user_name'] = $row['UID'];
-         header('location:../html/patient_page.html');
-
+         if($status == 'patient'){
+            $_SESSION['user_name'] = $row['UID'];
+            header('location:../html/patient_page.html');
+         }
+         else{
+            echo "<script>alert('User does not exist')
+            window.location.href='../html/login.html';
+            </script>";
+         }
       }
-     
    }else{
-      echo "<script>alert('incorrect email or password!')
+      echo "<script>alert('Incorrect email or password!')
       window.location.href='../html/login.html';
       </script>";
    }
