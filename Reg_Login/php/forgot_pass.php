@@ -46,9 +46,7 @@ if (isset($_POST['submit'])) {
                 foreach ($error as $error) {
                     echo '<span class="error-msg">' . $error . '</span>';
                 }
-                ;
             }
-            ;
             ?>
             <label for="email">Enter your email:</label><br>
             <input type="email" id="email" name="email" required><br>

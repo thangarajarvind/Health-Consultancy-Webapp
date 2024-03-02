@@ -30,7 +30,8 @@ if (isset($_POST['submit'])) {
         echo "<script>alert('Password updated successfully');</script>";
     echo "<script>window.location = '../html/login.html';</script>";
 
-    }} else 
+    }
+    } else 
         
         {
         $error[] = 'user does not exist!';
@@ -39,7 +40,6 @@ if (isset($_POST['submit'])) {
     
 
 }
-;
 
 ?>
 
@@ -67,9 +67,7 @@ if (isset($_POST['submit'])) {
                 foreach ($error as $error) {
                     echo '<span class="error-msg">' . $error . '</span>';
                 }
-                ;
             }
-            ;
             ?>
             <label for="email">Email:</label><br>
             <input type="email" name="email" required><br>
