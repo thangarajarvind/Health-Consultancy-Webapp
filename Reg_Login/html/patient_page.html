@@ -1,0 +1,114 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .time-slot {
+            padding: 10px;
+            margin: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .time-slot:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Doctor Dashboard</h1>
+        <h2 class="text-center mb-3">Create Time Slots</h2>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="list-group" id="create-time-slots">
+                    Time slots dynamically generated using JavaScript 
+                </div>
+            </div>
+        </div>
+        <h2 class="text-center mt-5 mb-3">Cancel Time Slots</h2>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="list-group" id="cancel-time-slots">
+                     Time slots dynamically generated using JavaScript 
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Function to generate time slots for the doctor
+        function generateTimeSlots(containerId) {
+            const slotsContainer = document.getElementById(containerId);
+            slotsContainer.innerHTML = '';
+
+            // Generate time slots for a day (e.g., from 9 AM to 5 PM with 30-minute intervals)
+            const startTime = 9;
+            const endTime = 17;
+            const interval = 30;
+
+            for (let hour = startTime; hour <= endTime; hour++) {
+                for (let minute = 0; minute < 60; minute += interval) {
+                    const timeSlot = document.createElement('div');
+                    timeSlot.classList.add('time-slot');
+                    timeSlot.textContent = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                    timeSlot.addEventListener('click', function() {
+                        // Code to handle slot click (e.g., toggle slot as available/unavailable)
+                        if (timeSlot.classList.contains('available')) {
+                            timeSlot.classList.remove('available');
+                        } else {
+                            timeSlot.classList.add('available');
+                        }
+                    });
+                    slotsContainer.appendChild(timeSlot);
+                }
+            }
+        }
+
+        // Call the function to generate time slots when the page loads
+        window.addEventListener('load', function() {
+            generateTimeSlots('create-time-slots');
+            generateTimeSlots('cancel-time-slots');
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Background image styling */
+        .main-content {
+            background-image: url("https://www.semiosissoftware.com/wp-content/uploads/2020/02/Doctor-Appointment-System-1536x840.jpg"); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 150vh; /* Ensure the background covers the entire viewport height */
+            width: 200vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="sidebar">
+        </div>
+        <div class="main-content">
+            <div class="container mt-5">
+                <h1 class="text-center mb-4">Patient Dashboard</h1>
+                <div class="col-md-12 text-center">
+                    <button class="text-center mt mb-3">Book Time Slots</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
