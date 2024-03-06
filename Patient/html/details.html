@@ -26,7 +26,7 @@
   <div class="nav" id="mynavbar">
         <a href="">Health Consultancy</a>
         <div class="nav-right" id="navbar-right">
-            <a href="../../Reg_Login/php/logout.php">Logout</a>
+            <a href="logout.php">Logout</a>
             <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                 <i class="fa fa-bars"></i>
             </a>
@@ -36,22 +36,29 @@
         <br>
         <a class="active" href="search.html">Book Appointment</a>
         <a href="../../Reg_Login/php/logout.php">Log Out</a>
+        
     </div>
     <section class="dashboard">
       <h2>Book Appointment</h2>
       <br><br>
-      <form name="bookAppointment" action="book.php" method="POST" style="width: 50%;margin-left: 19%;">
-         <h3>SEARCH FOR DOCTORS</h3>
-         <label for = "type"> Select a Speciality</label>
-         <select name="type" id="type" required> 
-            <option disabled selected value>select</option>
-            <option value="general">General Medicine</option>
-            <option value="cardio">Cardiology</option>
-            <option value="ortho">Ortho</option>
-        </select>
-        <label for = "type"> Choose a date</label>
-        <input type="date" name="date" required placeholder="date">
-         <input type="submit" name="submit" value="Search" class="form-btn" style="width: 19%;padding: 12px 10px;">
-         
-      </form>
+      <form name="details" action="../php/confirmation.php" method="POST"  style="width: 50%;margin-left: 19%;">
+        <label for = "type"> Select the symptom</label>
+        <select name="symp" id="symp" required>
+            <option disabled selected value>Select one</option>
+           <option value="acne">Acne</option>
+           <option value="asthma">Asthma</option>
+           <option value="BackPain">Back Pain</option>
+           <option value="DogBite">Dog bite</option>
+           <option value="Coldsymptoms">Cold symptoms</option>
+           <option value="Diarrhea">Diarrhea</option>
+           <option value="Dizziness">Dizziness</option>
+           <option value="fever">Fever</option>
+           <option value="vomitting">Vomitting</option>
+           <option value="stress">Stress</option>
+  </select>
+  <label>Description about your symptoms</label><br>
+                    <textarea id="reason" name="reason" placeholder="Enter description here.."
+                        style="height:200px" required></textarea>
+        <input type="submit" name="submit" value="Submit" style="width: 19%;padding: 12px 10px;">
+     </form>
       </section>

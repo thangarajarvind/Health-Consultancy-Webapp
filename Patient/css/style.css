@@ -13,7 +13,6 @@
    display: flex;
    align-items: center;
    justify-content: center;
-   padding:20px;
    padding-bottom: 60px;
 }
 
@@ -88,6 +87,7 @@
 }
 
 .form-container form input,
+.form-container form button,
 .form-container form select{
    width: 100%;
    padding:10px 15px;
@@ -132,4 +132,26 @@
    border-radius: 5px;
    font-size: 20px;
    padding:10px;
+}
+
+thead th,
+tfoot th {
+  font-family: "Rock Salt", cursive;
+}
+
+th {
+  letter-spacing: 2px;
+}
+
+td {
+  letter-spacing: 1px;
+  padding: 20px;
+}
+
+tbody td {
+  text-align: center;
+}
+
+tfoot th {
+  text-align: right;
 }

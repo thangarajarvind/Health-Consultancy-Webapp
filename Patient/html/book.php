@@ -1,13 +1,28 @@
+<!DOCTYPE html>
 <html lang="en">
+ 
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Select time slot</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0">
+    <title>Health Consultancy</title>
+    <link rel="icon" type="image/x-icon" href="../css/doctor_favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/doctor.css" type="text/css">
+    
+    <style>
+    	body {
+    		font-family: Arial, Helvetica, sans-serif;
+    	}
+    </style>
 
-   <link rel="stylesheet" href="../css/style.css">
-
-   <?php
+<?php
       session_start();
 
       $host = "localhost";
@@ -17,11 +32,19 @@
 
       $conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
 
-      $patID = 458;
+      $patID = $_SESSION['pat_id'];
 
       if(isset($_POST['submit'])){
         $type = $_POST['type'];
         $date = $_POST['date'];
+
+        $_SESSION['type'] = $type;
+        $_SESSION['date'] = $date;
+      }
+
+      if($type == NULL || $date == NULL){
+        $type = $_SESSION['type'];
+        $date = $_SESSION['date'];
       }
 
       $select = " SELECT * FROM DoctorAvailability WHERE DoctorType = '$type' ";
@@ -56,10 +79,26 @@
    ?>
 </head>
 <body>
-<h1> Health Consultancy</h1>
-<div class="form-container">
-<form name="cancel" action="../php/book.php" method="POST">
-  <table>
+  <div class="nav" id="mynavbar">
+        <a href="">Health Consultancy</a>
+        <div class="nav-right" id="navbar-right">
+            <a href="../../Reg_Login/php/logout.php">Logout</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+    <div class="sidenav" id="mySidenav">
+        <br>
+        <a class="active" href="search.html">Book Appointment</a>
+        <a href="../../Reg_Login/php/logout.php">Log Out</a>
+        
+    </div>
+    <section class="dashboard">
+      <h2>Book Appointment</h2>
+      <br><br>
+      <table id="appointment" class="users-table">
+      <form name="cancel" action="../php/book.php" method="POST">
     <thead>
       <tr>
         <th></th>
@@ -92,8 +131,4 @@
   </table>
   <input type="submit" name="submit" value="Book Appointment" class="form-btn">
 </form>
-
-</div>
-
-</body>
-</html>
+      </section>

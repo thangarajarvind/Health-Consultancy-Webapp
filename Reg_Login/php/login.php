@@ -35,8 +35,9 @@ if(isset($_POST['submit'])){
       }
       elseif($row['Status'] == 'patient'){
          if($status == 'patient'){
-            $_SESSION['user_name'] = $row['UID'];
-            header('location:../html/patient_page.html');
+            $_SESSION['pat_id'] = $row['UID'];
+            $_SESSION['logged_in'] = true;
+            header('location:../../Patient/html/search.html');
          }
          else{
             echo "<script>alert('User does not exist')

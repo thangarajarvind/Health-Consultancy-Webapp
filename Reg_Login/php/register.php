@@ -44,6 +44,22 @@ if(isset($_POST['submit'])){
          else{
           $insert = "INSERT INTO users(Name, Email, PhoneNumber, Status, Age, Password) VALUES('$name','$email','$phone','$user_type','$age','$pass')";
           $result = $conn->query($insert);
+          if($user_type == 'patient'){
+            $selectAppt = "SELECT UID FROM users ORDER BY UID DESC LIMIT 1";
+            $result = mysqli_query($conn, $selectAppt);
+            $row = mysqli_fetch_array($result);
+            $pat_id = $row['UID'];
+            $insert = "INSERT INTO Patients(UID, PatientsName, PatientEmail, PatientAge) VALUES('$pat_id','$name','$email','$age')";
+            $result = $conn->query($insert);
+          }
+          elseif($user_type == 'doctor'){
+            $selectAppt = "SELECT UID FROM users ORDER BY UID DESC LIMIT 1";
+            $result = mysqli_query($conn, $selectAppt);
+            $row = mysqli_fetch_array($result);
+            $doc_id = $row['UID'];
+            $insert = "INSERT INTO DoctorAvailability(UID, DoctorName) VALUES('$doc_id','$name')";
+            $result = $conn->query($insert);
+          }
           if ($result) {
           echo "<script>alert('Account created!')
             window.location.href='../html/login.html';
