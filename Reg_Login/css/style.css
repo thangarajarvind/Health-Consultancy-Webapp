@@ -35,7 +35,7 @@
 
 .container .content h1{
    font-size: 50px;
-   color:#333;
+   color:#000;
 }
 
 .container .content h1 span{
@@ -68,7 +68,9 @@
    justify-content: center;
    padding:20px;
    padding-bottom: 60px;
-   background: #eee;
+   background-image: url('backs.jpg');
+   background-size: cover;
+   background-position: center;
 }
 
 .form-container form{
