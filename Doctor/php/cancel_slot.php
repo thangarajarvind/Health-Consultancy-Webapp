@@ -71,12 +71,12 @@ if(isset($_POST['submit'])){
       else{
           $DELETE = "DELETE FROM `TimeSlots` WHERE ID = '$slot_id' ";
 
-          //$q_result1 = mysqli_query($conn, $DELETE);
+          $q_result1 = mysqli_query($conn, $DELETE);
 
           if($q_result1==True){
                echo '.';
                echo $slot_id;
-               pop("Slot removed".$slot_id,"success","../html/slots.php","");
+               pop("Slot removed","success","../html/slots.php","");
           }
 
       }

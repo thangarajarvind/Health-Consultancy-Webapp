@@ -76,6 +76,7 @@ if(isset($_POST['submit'])){
 
           $row = mysqli_fetch_array($resultAppointment);
           $pat_id = $row['PatientID'];
+          $ApptID = $row['ID'];
 
           $selectPat = " SELECT * FROM Patients WHERE UID = '$pat_id' ";
           $resultPatient = mysqli_query($conn, $selectPat);
@@ -89,8 +90,8 @@ if(isset($_POST['submit'])){
           $mail->Host = 'sandbox.smtp.mailtrap.io';
           $mail->SMTPAuth = true;
           $mail->Port = 2525;
-          $mail->Username = '34fca8e46805cf';
-          $mail->Password = 'aea572039bfb25';
+          $mail->Username = '1bf9f9c4051f37';
+          $mail->Password = 'df21c9e5fce7ca';
 
           $mail->IsHTML(true);
           $mail->AddAddress($pat_email, $pat_name);
@@ -117,14 +118,16 @@ if(isset($_POST['submit'])){
           echo "Error while sending Email.";
           var_dump($mail);
      } else {
-          $DELETE_SLOT = "DELETE FROM `TimeSlots` WHERE ID = '$slot_id' ";
-          $DELETE_APPT = "DELETE FROM `Appointment` WHERE TimeSlotID = '$slot_id' ";
-          $q_result1 = mysqli_query($conn, $DELETE_APPT);
-          $q_result2 = mysqli_query($conn, $DELETE_SLOT);
-          if($q_result1 == TRUE && $q_result2 == TRUE){
+          $DELETE_SLOT = "DELETE FROM TimeSlots WHERE ID = '$slot_id' ";
+          $DELETE_SYMP = "DELETE FROM patientSymptoms WHERE ApptID = '$ApptID' ";
+          $DELETE_APPT = "DELETE FROM Appointment WHERE TimeSlotID = '$slot_id' ";
+          $q_result1 = mysqli_query($conn, $DELETE_SYMP);
+          $q_result2 = mysqli_query($conn, $DELETE_APPT);
+          $q_result3 = mysqli_query($conn, $DELETE_SLOT);
+          
                echo '.';
                pop("Slot removed","success","../html/slots.php","Appointment was cancelled");
-          }
+          
      }
     }
     else{
@@ -147,10 +150,12 @@ if(isset($_POST['submit'])){
           echo "Error while sending Email.";
           var_dump($mail);
      } else {
-          $DELETE_SLOT = "DELETE FROM `TimeSlots` WHERE ID = '$slot_id' ";
-          $DELETE_APPT = "DELETE FROM `Appointment` WHERE TimeSlotID = '$slot_id' ";
-          $q_result1 = mysqli_query($conn, $DELETE_APPT);
-          $q_result2 = mysqli_query($conn, $DELETE_SLOT);
+          $DELETE_SLOT = "DELETE FROM TimeSlots WHERE ID = '$slot_id' ";
+          $DELETE_SYMP = "DELETE FROM patientSymptoms WHERE ApptID = '$ApptID' ";
+          $DELETE_APPT = "DELETE FROM Appointment WHERE TimeSlotID = '$slot_id' ";
+          $q_result1 = mysqli_query($conn, $DELETE_SYMP);
+          $q_result2 = mysqli_query($conn, $DELETE_APPT);
+          $q_result3 = mysqli_query($conn, $DELETE_SLOT);
           if($q_result1 == TRUE && $q_result2 == TRUE){
                echo '.';
                pop("Slot removed","success","../html/slots.php","Appointment was cancelled and reason was communicated to the patient");

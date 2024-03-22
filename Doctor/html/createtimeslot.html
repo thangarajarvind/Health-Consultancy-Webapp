@@ -1,108 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+ 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Appointment Slot</title>
-    <link rel="stylesheet" href="../css/doctor.css">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0">
+    <title>Health Consultancy</title>
+    <link rel="icon" type="image/x-icon" href="../css/doctor_favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/doctor.css" type="text/css">
+    
     <style>
-        /* Additional CSS for button size */
-        button[type="submit"] {
-            padding: 10px 20px; /* Adjust padding to increase button size */
-            font-size: 16px; /* Adjust font size as needed */
-        }
+    	body {
+    		font-family: Arial, Helvetica, sans-serif;
+    	}
     </style>
-    <script>
-        function divideSlots() {
-            // Implementation for dividing slots
+
+<script>
+    function divideSlots() {
+        // Implementation for dividing slots
+    }
+
+    function validateForm() {
+        var startTime = document.getElementById('available_from').value;
+        var endTime = document.getElementById('available_to').value;
+        var duration = document.getElementById('duration').value;
+        var currentDate = new Date();
+        var selectedDate = new Date(document.getElementById('date').value);
+
+        // Validate date
+        if (selectedDate < currentDate) {
+            alert('Please select a date from the present to the future.');
+            return false;
         }
 
-        function validateForm() {
-            var startTime = document.getElementById('available_from').value;
-            var endTime = document.getElementById('available_to').value;
-            var duration = document.getElementById('duration').value;
-            var currentDate = new Date();
-            var selectedDate = new Date(document.getElementById('date').value);
-
-            // Validate date
-            if (selectedDate < currentDate) {
-                alert('Please select a date from the present to the future.');
-                return false;
-            }
-
-            // Validate start time
-            if (!startTime) {
-                alert('Please enter a valid start time.');
-                return false;
-            }
-
-            // Validate end time
-            if (!endTime) {
-                alert('Please enter a valid end time.');
-                return false;
-            }
-
-            // Validate duration
-            if (duration <= 0 || isNaN(duration)) {
-                alert('Duration must be a positive number.');
-                return false;
-            }
-
-            // Split the time strings into hours and minutes
-            var startParts = startTime.split(':');
-            var endParts = endTime.split(':');
-
-            // Create new Date objects and set the hours and minutes
-            var start = new Date();
-            start.setHours(parseInt(startParts[0], 10));
-            start.setMinutes(parseInt(startParts[1], 10));
-
-            var end = new Date();
-            end.setHours(parseInt(endParts[0], 10));
-            end.setMinutes(parseInt(endParts[1], 10));
-
-            var slotDuration = parseInt(duration, 10);
-
-            // Ensure end time is after start time
-            if (end <= start) {
-                alert('End time must be after start time.');
-                return false;
-            }
-
-            // Validate slot duration
-            var diffMs = end - start;
-            var diffMinutes = Math.floor((diffMs % 86400000) / 60000); // Get difference in minutes
-            if (diffMinutes < slotDuration) {
-                alert('Slot duration exceeds available time range.');
-                return false;
-            }
-
-            return true;
+        // Validate start time
+        if (!startTime) {
+            alert('Please enter a valid start time.');
+            return false;
         }
-    </script>
+
+        // Validate end time
+        if (!endTime) {
+            alert('Please enter a valid end time.');
+            return false;
+        }
+
+        // Validate duration
+        if (duration <= 0 || isNaN(duration)) {
+            alert('Duration must be a positive number.');
+            return false;
+        }
+
+        // Split the time strings into hours and minutes
+        var startParts = startTime.split(':');
+        var endParts = endTime.split(':');
+
+        // Create new Date objects and set the hours and minutes
+        var start = new Date();
+        start.setHours(parseInt(startParts[0], 10));
+        start.setMinutes(parseInt(startParts[1], 10));
+
+        var end = new Date();
+        end.setHours(parseInt(endParts[0], 10));
+        end.setMinutes(parseInt(endParts[1], 10));
+
+        var slotDuration = parseInt(duration, 10);
+
+        // Ensure end time is after start time
+        if (end <= start) {
+            alert('End time must be after start time.');
+            return false;
+        }
+
+        // Validate slot duration
+        var diffMs = end - start;
+        var diffMinutes = Math.floor((diffMs % 86400000) / 60000); // Get difference in minutes
+        if (diffMinutes < slotDuration) {
+            alert('Slot duration exceeds available time range.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
 </head>
 <body>
-    <h2>Create Appointment Slot</h2>
-    <form id="slotForm" action="../php/createtime.php" method="POST" onsubmit="return validateForm()">
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required><br>
-        
-        <label for="available_from">Available From:</label>
-        <input type="time" id="available_from" name="available_from" onchange="divideSlots()" required><br>
-        
-        <label for="available_to">Available to:</label>
-        <input type="time" id="available_to" name="available_to" onchange="divideSlots()" required><br>
-        
-        <label for="DoctorID">Doctor ID:</label>
-        <input type="number" id="DoctorID" name="DoctorID" onchange="divideSlots()" required><br>
-        
-        <div class="col-md-12 text-center" >
-            <button type="submit">Create Slot</button>
+  <div class="nav" id="mynavbar">
+        <a href="">Health Consultancy</a>
+        <div class="nav-right" id="navbar-right">
+            <a href="../../Reg_Login/php/logout.php">Logout</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
         </div>
-    </form>
-    
-    <div id="slotsContainer">
-        <!-- Slots will be displayed here -->
     </div>
-</body>
-</html>
+    <div class="sidenav" id="mySidenav">
+        <br>
+        <a class="active" href="createtimeslot.html">Create Time Slot</a>
+        <a href="slots.php">Cancel Time Slot</a>
+        <a href="../../Reg_Login/php/logout.php">Log Out</a>
+        
+    </div>
+    <section class="dashboard">
+        <h2>Create Appointment Slot</h2>
+        <form id="slotForm" action="../php/createtime.php" method="POST" onsubmit="return validateForm()">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+            
+            <label for="available_from">Available From:</label>
+            <input type="time" id="available_from" name="available_from" onchange="divideSlots()" required><br>
+            
+            <label for="available_to">Available to:</label>
+            <input type="time" id="available_to" name="available_to" onchange="divideSlots()" required><br>
+
+            <input type="submit" name="submit" value="Create slot" class="form-btn">
+        </form>
+      </section>

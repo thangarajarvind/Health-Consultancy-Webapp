@@ -95,8 +95,8 @@ if(isset($_POST['submit'])){
     $mail->Host = 'sandbox.smtp.mailtrap.io';
     $mail->SMTPAuth = true;
     $mail->Port = 2525;
-    $mail->Username = '34fca8e46805cf';
-    $mail->Password = 'aea572039bfb25';
+    $mail->Username = '1bf9f9c4051f37';
+    $mail->Password = 'df21c9e5fce7ca';
 
     $mail->IsHTML(true);
     $mail->AddAddress($pat_email, $pat_name);

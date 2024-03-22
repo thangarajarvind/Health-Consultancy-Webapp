@@ -77,7 +77,7 @@ $doc_id = $_SESSION['doc_id'];
         
     </div>
     <section class="dashboard">
-      <h2>Cancel Appointment Slots</h2>
+      <h2>Cancel Time Slots</h2>
       <br><br>
       <table id="appointment" class="users-table">
       <form name="cancel" action="../php/cancel_slot.php" method="POST">
