@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Consultancy</title>
+    <link rel="icon" type="image/x-icon" href="../css/doctor_favicon.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/doctor.css" type="text/css">
+    
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        /* Hover effect for appointment ID cell */
+        #appointmentBody td:first-child:hover {
+            cursor: pointer;
+            color: blue; /* Change color as desired */
+        }
+    </style>
+
+</head>
+<body>
+    <div class="nav" id="mynavbar">
+        <a href="">Health Consultancy</a>
+        <div class="nav-right" id="navbar-right">
+            <a href="../../Reg_Login/php/logout.php">Logout</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+    <div class="sidenav" id="mySidenav">
+        <br>
+        <a href="search.html">Book Appointment</a>
+        <a class="active" href="futureapp.html">View Appointment</a>
+        <a href="../../Reg_Login/php/logout.php">Log Out</a>
+    </div>
+    <section class="dashboard">
+        <h2>Future Appointment</h2>
+        <br><br>
+        <!-- Add search input -->
+        <input type="text" id="searchInput" onkeyup="filterAppointments()" placeholder="Search for appointments..">
+        
+        <table id="appointment" class="users-table">
+            <thead>
+                <tr>
+                    <th>Appointment ID</th>
+                    <th>Date</th>
+                    <th>Doctor Name</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentBody">
+                <!-- Table rows will be populated dynamically by JavaScript -->
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        function fetchAppointments() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("Response from server:", this.responseText);
+                    var appointments = JSON.parse(this.responseText);
+                    populateTable(appointments);
+                }
+            };
+            xhttp.open("GET", "../php/data.php", true);
+            xhttp.send();
+        }
+
+        // Function to populate the table with appointments
+        function populateTable(appointments) {
+            var tableBody = document.getElementById("appointmentBody");
+            tableBody.innerHTML = ""; // Clear existing table rows
+            appointments.forEach(function(appointment) {
+                var row = document.createElement("tr");
+                
+                // Create and append appointment ID cell
+                var appointmentIDCell = document.createElement("td");
+                appointmentIDCell.textContent = appointment.ID;
+                appointmentIDCell.addEventListener('click', function() {
+                    redirectToInfoPage(appointment.ID);
+                });
+                row.appendChild(appointmentIDCell);
+                
+                // Create and append appointment date cell
+                var apptDateCell = document.createElement("td");
+                apptDateCell.textContent = appointment.apptDate;
+                row.appendChild(apptDateCell);
+                
+                // Create and append doctor name cell
+                var docNameCell = document.createElement("td");
+                docNameCell.textContent = appointment.DocName;
+                row.appendChild(docNameCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to redirect to info.html with appointment ID as a query parameter
+        function redirectToInfoPage(appointmentID) {
+            window.location.href = "info.html?appointmentID=" + appointmentID;
+        }
+
+        // Call fetchAppointments function when the page loads
+        window.onload = fetchAppointments;
+
+        // Function to filter appointments based on search input
+        function filterAppointments() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("appointment");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                for (var j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

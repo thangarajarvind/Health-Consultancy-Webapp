@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Consultancy - Appointment Information</title>
+    <link rel="icon" type="image/x-icon" href="../css/doctor_favicon.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/doctor.css" type="text/css">
+    
+    <style>
+        /* Add any additional styling here */
+        .appointment-details {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav" id="mynavbar">
+        <a href="">Health Consultancy</a>
+        <div class="nav-right" id="navbar-right">
+            <a href="../../Reg_Login/php/logout.php">Logout</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+    <div class="sidenav" id="mySidenav">
+        <br>
+        <a href="search.html">Book Appointment</a>
+        <a class="active" href="futureapp.html">View Appointment</a>
+        <a href="../../Reg_Login/php/logout.php">Log Out</a>
+    </div>
+    <section class="dashboard">
+        <div class="container">
+            <h2>Appointment Information</h2>
+            <div class="appointment-details" id="appointmentDetails">
+                <!-- Appointment details will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Include your JavaScript files if needed -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to get the appointment ID from the URL query parameters
+            function getAppointmentID() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('appointmentID');
+            }
+
+            // Retrieve the appointment ID
+            var appointmentID = getAppointmentID();
+
+            // Make AJAX request to retrieve appointment details using the appointment ID
+            $.ajax({
+                url: '../php/info.php',
+                method: 'GET',
+                dataType: 'json',
+                data: { appointmentID: appointmentID }, // Pass appointment ID to the server
+                success: function(data) {
+                    console.log('Response from info.php:', data);
+                    var appointmentDetails = "";
+                    appointmentDetails += "<p><strong>Appointment ID:</strong> <span>" + data.appointmentID + "</span></p>";
+                    appointmentDetails += "<p><strong>Date:</strong> <span>" + data.date + "</span></p>";
+                    appointmentDetails += "<p><strong>Doctor Name:</strong> <span>" + data.doctorName + "</span></p>";
+                    appointmentDetails += "<p><strong>Start Time:</strong> <span>" + data.startTime + "</span></p>";
+                    appointmentDetails += "<p><strong>End Time:</strong> <span>" + data.endTime + "</span></p>";
+                    appointmentDetails += "<p><strong>Symptoms:</strong> <span>" + data.symptoms + "</span></p>";
+                    $('#appointmentDetails').html(appointmentDetails);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('Error:', errorThrown);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

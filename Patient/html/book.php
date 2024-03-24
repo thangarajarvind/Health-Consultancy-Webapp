@@ -63,6 +63,7 @@
         if(mysqli_num_rows($result) > 0){
             while($rows = mysqli_fetch_array($result)){
                 $aval_array[] = $rows['AvailabilityID'];
+                echo $rows['AvailabilityID'];
             }
             foreach($aval_array as $aval){
                 $select = " SELECT * FROM Timeslots WHERE AvailabilityID = '$aval' AND IsAvailable = 1";
@@ -70,6 +71,7 @@
                 if(mysqli_num_rows($result) > 0){
                     while($rows = mysqli_fetch_array($result)){
                         $slot_array[] = $rows['ID'];
+                        echo $rows['ID'];
                     }
                 }
 

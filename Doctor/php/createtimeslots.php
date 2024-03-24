@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $sql_availability_id = "SELECT AvailabilityID FROM Availability 
                         WHERE AvailableFrom = '$available_from' 
                         AND AvailableTo = '$available_to'
+                        AND Date = '$date'
                         AND DoctorID = '$doctor_id'";
 $result_availability_id = mysqli_query($conn, $sql_availability_id);
 
@@ -82,9 +83,9 @@ if ($result_availability_id) {
             echo "Cannot create multiple slots for the given time for this doctor";
         } else {
             // Define the divideTimeSlots function
-            function divideTimeSlots($start, $end, $duration) {
-                $start = new DateTime($start);
-                $end = new DateTime($end);
+            function divideTimeSlots($date, $start, $end, $duration) {
+                $start = new DateTime($date . ' ' . $start);
+                $end = new DateTime($date . ' ' . $end);
                 $interval = new DateInterval('PT' . $duration . 'M');
                 $slots = array();
 
@@ -102,7 +103,7 @@ if ($result_availability_id) {
             }
 
             // Use divideTimeSlots function to generate time slots
-            $timeSlots = divideTimeSlots($available_from, $available_to, 60); // Assuming each slot is 60 minutes
+            $timeSlots = divideTimeSlots($date ,$available_from, $available_to, 60); // Assuming each slot is 60 minutes
 
             foreach ($timeSlots as $slot) {
                 $startTime = $slot['start'];
