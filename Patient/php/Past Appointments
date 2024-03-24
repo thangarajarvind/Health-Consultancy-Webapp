@@ -1,0 +1,112 @@
+<?php
+// Sample data for appointments (replace with actual data from database)
+$appointments = [
+    [
+        'appointment_number' => 14,
+        'date' => '2024-01-26',
+        'time' => '10:00 AM',
+        'doctor' => 'TestDoc',
+        'diagnosis' => 'Cold Symptons',
+        'prescription' => 'test',
+    ],
+    [
+        'appointment_number' => 15,
+        'date' => '2024-01-16',
+        'time' => '2:30 PM',
+        'doctor' => 'TestDoc',
+        'diagnosis' => 'Acne',
+        'prescription' => 'test',
+    ],
+    // Add more appointment data as needed
+    [
+        'appointment_number' => 16,
+        'date' => '2024-02-20',
+        'time' => '9:15 AM',
+        'doctor' => 'TestDoc',
+        'diagnosis' => 'Cold Symptons',
+        'prescription' => 'test',
+    ],
+    [
+        'appointment_number' => 18,
+        'date' => '2024-03-12',
+        'time' => '3:00 PM',
+        'doctor' => 'TestDoc',
+        'diagnosis' => 'Cold Symptons',
+        'prescription' => 'test',
+    ],
+    [
+        'appointment_number' => 19,
+        'date' => '2024-03-02',
+        'time' => '11:30 AM',
+        'doctor' => 'TestDoc',
+        'diagnosis' => 'BackPain',
+        'prescription' => 'test',
+    ],
+
+];
+
+// var_dump($_GET); // Debugging line to display $_GET parameters
+
+// Function to filter appointments based on search criteria
+function filterAppointments($criteria, $appointments)
+{
+    $filteredAppointments = $appointments;
+
+    if (!empty ($criteria['date'])) {
+        $filteredAppointments = array_filter($filteredAppointments, function ($appt) use ($criteria) {
+            return $appt['date'] === $criteria['date'];
+        });
+    }
+
+    if (!empty ($criteria['doctor'])) {
+        $filteredAppointments = array_filter($filteredAppointments, function ($appt) use ($criteria) {
+            return $appt['doctor'] === $criteria['doctor'];
+        });
+    }
+
+    if (!empty ($criteria['appointment_number'])) {
+        $filteredAppointments = array_filter($filteredAppointments, function ($appt) use ($criteria) {
+            return $appt['appointment_number'] == $criteria['appointment_number'];
+        });
+    }
+
+    return $filteredAppointments;
+}
+
+
+// Check if search criteria are provided
+if (!empty ($_GET['date']) || !empty ($_GET['doctor']) || !empty ($_GET['appointment_number'])) {
+    $filteredAppointments = filterAppointments($_GET, $appointments);
+    // Display appointment details
+    if (!empty ($filteredAppointments)) {
+        echo '<ul>';
+        foreach ($filteredAppointments as $appointment) {
+            echo '<li>';
+            echo '<strong>Appointment Number:</strong> ' . $appointment['appointment_number'] . '<br>';
+            echo '<strong>Date:</strong> ' . $appointment['date'] . '<br>';
+            echo '<strong>Time:</strong> ' . $appointment['time'] . '<br>';
+            echo '<strong>Doctor:</strong> ' . $appointment['doctor'] . '<br>';
+            echo '<strong>Diagnosis:</strong> ' . $appointment['diagnosis'] . '<br>';
+            echo '<strong>Prescription:</strong> ' . $appointment['prescription'] . '<br>';
+            echo '</li>';
+        }
+        echo '</ul>';
+    } else {
+        echo 'No appointments found.';
+    }
+} else {
+    // Display all appointments by default if no search criteria are provided
+    echo '<ul>';
+    foreach ($appointments as $appointment) {
+        echo '<li>';
+        echo '<strong>Appointment Number:</strong> ' . $appointment['appointment_number'] . '<br>';
+        echo '<strong>Date:</strong> ' . $appointment['date'] . '<br>';
+        echo '<strong>Time:</strong> ' . $appointment['time'] . '<br>';
+        echo '<strong>Doctor:</strong> ' . $appointment['doctor'] . '<br>';
+        echo '<strong>Diagnosis:</strong> ' . $appointment['diagnosis'] . '<br>';
+        echo '<strong>Prescription:</strong> ' . $appointment['prescription'] . '<br>';
+        echo '</li>';
+    }
+    echo '</ul>';
+}
+?>
