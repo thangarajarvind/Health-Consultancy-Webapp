@@ -1,25 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Past Appointments</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <h1>View Past Appointments</h1>
-    <form action="search.php" method="GET">
-        <label for="date">Date:</label>
+    <form id="search-form">
+        <!-- <label for="date">Date:</label>
         <input type="date" id="date" name="date">
 
         <label for="doctor">Doctor:</label>
         <input type="text" id="doctor" name="doctor">
 
         <label for="appointment_number">Appointment Number:</label>
-        <input type="number" id="appointment_number" name="appointment_number">
+        <input type="number" id="appointment_number" name="appointment_number"> -->
 
-        <button type="submit">Search</button>
+        <button type="submit">Filter</button>
     </form>
+    <div id="appointment-list">
+        <h2>Appointment List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Appointment Number</th>
+                    <th>Date Of Appointment</th>
+                    <th> Doctor </th>
+                </tr>
+            </thead>
+            <tbody id="appointment-table">
+                <!-- Appointments will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
     <div id="appointment-details"></div>
+
+    <script>
+        // Function to handle form submission and redirect to new page with search criteria
+        document.getElementById('search-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form data
+            const formData = new FormData(this);
+            const searchParams = new URLSearchParams(formData);
+
+            // Redirect to new page with search criteria as URL parameters
+            window.location.href = 'search1.php?' + searchParams.toString();
+        });
+
+        // Function to update the appointment list based on search criteria
+        function updateAppointmentList(appointments) {
+            const appointmentTable = document.getElementById('appointment-table');
+            appointmentTable.innerHTML = ''; // Clear existing data
+
+            appointments.forEach(appointment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${appointment.appointment_number}</td>
+                    <td>${appointment.date}</td>
+                    <td>${appointment.doctor}</td>
+                `;
+                appointmentTable.appendChild(row);
+            });
+        }
+
+        // Sample data for appointments (replace with actual data from search.php)
+        const appointmentsData = [
+            { appointment_number: 14, date: '2024-01-26', doctor: 'TestDoc' },
+            { appointment_number: 15, date: '2024-01-16', doctor: 'TestDoc' },
+            { appointment_number: 16, date: '2024-02-20', doctor: 'TestDoc' },
+            { appointment_number: 18, date: '2024-03-12', doctor: 'TestDoc' },
+            { appointment_number: 19, date: '2024-03-02', doctor: 'TestDoc' },
+        ];
+
+        // Update the appointment list on page load
+        updateAppointmentList(appointmentsData);
+    </script>
 </body>
+
 </html>
