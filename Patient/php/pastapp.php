@@ -15,7 +15,7 @@
      
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-     <link rel="stylesheet" href="../css/filterapp.css" type="text/css">
+     <link rel="stylesheet" href="filterapp.css" type="text/css">
      
      <style>
           body {
@@ -53,7 +53,7 @@ $dbname = "healthConsultancy";
 $conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
  
 
-$select=("SELECT AD.appointmentID, AD.UID, P.PatientsName,AD.date,AD.DoctorName,AD.DoctorType, PD.Description,PS.Symptom FROM appointmentdetails as AD join Patients as P join Patientdiagnosis as PD join PatientSymptoms as PS WHERE AD.AppointmentID=PS.ApptID and AD.AppointmentID=PD.ApptID and AD.UID=P.UID");
+$select=("SELECT AD.appointmentID, AD.UID, PD.Prescription, P.PatientsName,AD.date,AD.DoctorName,AD.DoctorType, PD.Description,PS.Symptom FROM appointmentdetails as AD join Patients as P join Patientdiagnosis as PD join PatientSymptoms as PS WHERE AD.AppointmentID=PS.ApptID and AD.AppointmentID=PD.ApptID and AD.UID=P.UID");
 $appointments = mysqli_query($conn,$select); 
 
 if (mysqli_num_rows($appointments)==0){
@@ -69,27 +69,30 @@ if (mysqli_num_rows($appointments)==0){
             <thead>
                 <tr>
                     <th>Appointment ID</th>
-                    <th>Patient ID</th>
                     <th>Patient Name</th>
+                    <th>Date</th>
                     <th>Doctor Name</th>
                     <th>Doctor Type</th>
                     <th>Diagnosis</th>
                     <th>Symptoms</th>
+                    <th>Prescription</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 <?php 
-        while ($row = mysqli_fetch_array($appointments)) {
-            echo "<tr><td>".$row['appointmentID']."</td>";
-            echo "<td>".$row['UID']."</td>" ;
-            echo "<td>".$row['PatientsName']."</td>" ;
-            echo "<td>".$row['DoctorName']."</td>" ;
-            echo "<td>".$row['DoctorType']."</td>" ;
-            echo "<td>".$row['Description']."</td>" ;
-            echo "<td>".$row['Symptom']."</td></tr>" ;
-        }
-        ?>
-
+                while ($row = mysqli_fetch_array($appointments)) {
+                    echo "<tr><td>".$row['appointmentID']."</td>";
+                    echo "<td>".$row['PatientsName']."</td>" ;
+                    echo "<td>".$row['date']."</td>" ;
+                    echo "<td>".$row['DoctorName']."</td>" ;
+                    echo "<td>".$row['DoctorType']."</td>" ;
+                    echo "<td>".$row['Description']."</td>" ;
+                    echo "<td>".$row['Symptom']."</td>" ;
+                    echo "<td>".$row['Prescription']."</td></tr>" ;
+                    
+                }
+                ?>
             </tbody>
         </table>
     </section>
