@@ -6,6 +6,7 @@
     <title>Medical Bill Generation</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/doctor.css" type="text/css">
+    <link rel="icon" type="image/x-icon" href="../css/doctor_favicon.png">
     <style>
         /* CSS styles */
         table {
@@ -194,7 +195,10 @@ if(isset($_POST['submit'])){
                 // Proceed with form submission
                 $.post('../php/generate_bill.php', formData, function(response) {
                     console.log(response); // Log the response from the server
-                 });
+                    // Redirect to the generated bill page
+                    alert('Bill generated');
+                    window.location.href = 'cal.php';
+                });
             });
         });
     </script>
