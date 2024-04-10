@@ -21,6 +21,10 @@
             cursor: pointer;
             color: blue; /* Change color as desired */
         }
+        input[type=text]{
+            width: 20%;
+            margin-left: 55%;
+        }
     </style>
 
 </head>
@@ -41,12 +45,11 @@
         <a href="../../Reg_Login/php/logout.php">Log Out</a>
     </div>
     <section class="dashboard">
-        <h2>Future Appointment</h2>
-        <br><br>
+        <h2 style="text-align:left;float:left;">Future Appointment</h2>
         <!-- Add search input -->
         <input type="text" id="searchInput" onkeyup="filterAppointments()" placeholder="Search for appointments..">
-        
         <table id="appointment" class="users-table">
+            <br><br><br>
             <thead>
                 <tr>
                     <th>Appointment ID</th>

@@ -14,11 +14,19 @@
     <style>
         /* Add any additional styling here */
         .appointment-details {
+            margin-top: 55px;
             margin-bottom: 20px;
-            padding: 20px;
+            padding: 30px;
             background-color: #f4f4f4;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 35%;
+            text-align: center;
+            left: 0;
+            margin:0 auto;
+        }
+        h2{
+            text-align: center;
         }
     </style>
 </head>
@@ -39,12 +47,12 @@
         <a href="../../Reg_Login/php/logout.php">Log Out</a>
     </div>
     <section class="dashboard">
-        <div class="container">
             <h2>Appointment Information</h2>
+            <br><br>
             <div class="appointment-details" id="appointmentDetails">
                 <!-- Appointment details will be populated here -->
             </div>
-        </div>
+            <input type="submit" name="submit" value="Cancel Appointment">
     </section>
 
     <!-- Include your JavaScript files if needed -->
